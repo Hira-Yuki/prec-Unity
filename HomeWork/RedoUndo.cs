@@ -3,50 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StackNode<T>
-{
-    public T Data;
-    public StackNode<T> Prev;
-}
-
-public class StackCustom<T> where T : new()
-{
-    public StackNode<T> Top;
-
-    public void Push(T data)
-    {
-        StackNode<T> stackNode = new StackNode<T>();
-
-        stackNode.Data = data;
-        stackNode.Prev = Top;
-        Top = stackNode;
-    }
-
-    public T Pop()
-    {
-        if (Top == null)
-        {
-            return new T();
-        }
-        
-        T result = Top.Data;
-        Top = Top.Prev;
-        
-        return result;
-    }
-    
-    public T Peek()
-    {
-        if (Top == null)
-        {
-            return new T();
-        }
-        
-        return Top.Data;
-    }
-}
-
-public class StackExampleComponents : MonoBehaviour
+public class RedoUndoComponents : MonoBehaviour
 {  
     [NonSerialized]
     public float Speed = 3.0f;
