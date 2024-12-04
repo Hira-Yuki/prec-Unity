@@ -39,7 +39,7 @@ public class RedoUndoComponents : MonoBehaviour
             movePos = Vector3.zero;
             _positionStack.Push(transform.position);
             _redoStack.Clear();
-            Debug.Log("새로운 언두 스택 저장 -> /n 리두 스택 리셋");
+            Debug.Log("새로운 언두 스택 저장 -> \n 리두 스택 리셋");
             Debug.Log($"언두에 저장된 스택 수: {_positionStack.Count}");
             Debug.Log($"리두에 저장된 스택 수: {_redoStack.Count}");
         }
