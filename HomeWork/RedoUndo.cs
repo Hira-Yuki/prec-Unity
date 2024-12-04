@@ -2,17 +2,38 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RedoUndoComponents : MonoBehaviour
-{  
-    private float speed = 3.0f;
-    
-    private readonly Stack<Vector3> _positionStack = new Stack<Vector3>(); 
+{
+    private const float Speed = 3.0f;
+
+    private readonly Stack<Vector3> _undoStack = new Stack<Vector3>(); 
     private readonly Stack<Vector3> _redoStack = new Stack<Vector3>();
-    
+    private Vector3 _myPos ;
+
+    private void Start()
+    {
+        _myPos = transform.position;
+    }
+
     private void Update()
     {
-        Movements();
-        Undo();
-        Redo();
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        {
+            Movements();
+        }
+        
+        ApplyPosition();
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Undo();
+        }
+
+        if (Input.GetKey(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.R))
+        {
+            Redo();
+        }
+        
+        
     }
 
     private void Movements()
@@ -37,36 +58,38 @@ public class RedoUndoComponents : MonoBehaviour
             || Input.GetKeyDown(KeyCode.D))
         {
             movePos = Vector3.zero;
-            _positionStack.Push(transform.position);
-            _redoStack.Clear();
-            Debug.Log("새로운 언두 스택 저장 -> \n 리두 스택 리셋");
-            Debug.Log($"언두에 저장된 스택 수: {_positionStack.Count}");
-            Debug.Log($"리두에 저장된 스택 수: {_redoStack.Count}");
+            SaveState();
         }
         
-        transform.position += movePos.normalized * (speed * Time.deltaTime);
+        _myPos += movePos.normalized * (Speed * Time.deltaTime);
+    }
+
+    private void SaveState()
+    {
+        _undoStack.Push(transform.position);
+        _redoStack.Clear();
+        Debug.Log($"새로운 위치 저장 - 언두 스택: {_undoStack.Count}, 리두 스택 초기화됨");
     }
 
     private void Undo()
     {
-        if (!Input.GetKeyDown(KeyCode.Space)) return;
-        if (!_positionStack.TryPop(out Vector3 newPosition)) return;
-        _redoStack.Push(transform.position);
-        transform.position = newPosition;
-        Debug.Log("언두 실행 및 새로운 리두 스택 추가");
-        Debug.Log($"언두에 저장된 스택 수: {_positionStack.Count}");
-        Debug.Log($"리두에 저장된 스택 수: {_redoStack.Count}");
+        if (!_undoStack.TryPop(out Vector3 newPosition)) return;
+        _redoStack.Push(_myPos);
+        _myPos = newPosition;
+        Debug.Log($"Undo 실행 - 언두 스택: {_undoStack.Count}, 리두 스택: {_redoStack.Count}");
     }
 
     private void Redo()
     {
-        if (!Input.GetKey(KeyCode.LeftControl) || !Input.GetKeyDown(KeyCode.R)) return;
         if (!_redoStack.TryPop(out Vector3 newPosition)) return;
-        _positionStack.Push(transform.position);
-        transform.position = newPosition;
-        Debug.Log("리두 실행 및 새로운 언두 스택 추가");
-        Debug.Log($"언두에 저장된 스택 수: {_positionStack.Count}");
-        Debug.Log($"리두에 저장된 스택 수: {_redoStack.Count}");
+        _undoStack.Push(_myPos);
+        _myPos = newPosition;
+        Debug.Log($"Redo 실행 - 언두 스택: {_undoStack.Count}, 리두 스택: {_redoStack.Count}");
+    }
+    
+    private void ApplyPosition()
+    {
+        transform.position = _myPos;
     }
     
 }
