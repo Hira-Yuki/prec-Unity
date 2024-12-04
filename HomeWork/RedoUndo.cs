@@ -1,15 +1,9 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class RedoUndoComponents : MonoBehaviour
 {  
-    [NonSerialized]
-    public float Speed = 3.0f;
-
-    [SerializeField]
-    public float Speed2 = 3.0f;
+    private float speed = 3.0f;
     
     private readonly Stack<Vector3> _positionStack = new Stack<Vector3>(); 
     private readonly Stack<Vector3> _redoStack = new Stack<Vector3>();
@@ -50,7 +44,7 @@ public class RedoUndoComponents : MonoBehaviour
             Debug.Log($"리두에 저장된 스택 수: {_redoStack.Count}");
         }
         
-        transform.position += movePos.normalized * (Speed2 * Time.deltaTime);
+        transform.position += movePos.normalized * (speed * Time.deltaTime);
     }
 
     private void Undo()
