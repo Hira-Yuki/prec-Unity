@@ -28,7 +28,7 @@ public class RedoUndoComponents : MonoBehaviour
             Undo();
         }
 
-        if (Input.GetKey(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.R))
         {
             Redo();
         }
