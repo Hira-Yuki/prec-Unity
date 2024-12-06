@@ -5,7 +5,8 @@ namespace ConsoleApp1 // Note: actual namespace depends on the project name.
         static void Main(string[] args)
         {
           object foo = 23;
-          
+
+          // 선언 패턴
           if (foo is int bar) // 1.foo가 int인 경우 2. foo를 int 형식으로 변환하여 bar에 할당.
           {
               Console.WriteLine(bar); // 23
