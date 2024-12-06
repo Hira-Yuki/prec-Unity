@@ -2,24 +2,6 @@
 // C# 9.0 이후 지원
 // 변수 생성 없이 형식 일치 여부만 테스트함.
 
-// ######### 실행 결과 #########
-// Fee for a senior : $200
-// Fee for a Adult : $500
-// Fee for a underage : $100
-// Unhandled exception. System.ArgumentException: Prohibited age: ConsoleApp1.Preschooler (Parameter 'visitor')
-// ###########################
-
-// ########### 참조 ###########
-// nameof : 식별자의 이름(예: 변수, 메서드, 클래스 이름 등)을 문자열로 반환
-// 1. 기본 사용법
-// `nameof(식별자)`
-
-/* 예시
-* string variableName = nameof(variableName); // "variableName"
-* Console.WriteLine(variableName);
-*/
-// 출력 : variableName
-
 namespace ConsoleApp1 
 {
     class Preschooler { }
@@ -49,3 +31,21 @@ namespace ConsoleApp1
         }
     }
 }
+
+// ######### 실행 결과 #########
+// Fee for a senior : $200
+// Fee for a Adult : $500
+// Fee for a underage : $100
+// Unhandled exception. System.ArgumentException: Prohibited age: ConsoleApp1.Preschooler (Parameter 'visitor')
+// ###########################
+
+// ########### 참조 ###########
+// nameof : 식별자의 이름(예: 변수, 메서드, 클래스 이름 등)을 문자열로 반환
+// 1. 기본 사용법
+// `nameof(식별자)`
+
+/* 예시
+* string variableName = nameof(variableName); // "variableName"
+* Console.WriteLine(variableName);
+*/
+// 출력 : variableName
