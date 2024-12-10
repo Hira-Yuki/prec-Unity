@@ -13,12 +13,19 @@ internal partial class MainApp
     var GenerateMessage = (Car car, string nickname) => 
       $"{car.Model} produced in {car.ProducedAt.Year} is {nickname}";
 
-    if(car is Car {Model:"Mustang", ProducedAt.Year: 1967})
-      return GenerateMessage(car, "Fastback");
-    else if (car is Car {Model:"Mustang", ProducedAt.Year: 1976})
-      return GenerateMessage(car, "Cobra II");
-    else 
-      return GenerateMessage(car, "Unknown");
+    // if(car is Car {Model:"Mustang", ProducedAt.Year: 1967})
+    //     return GenerateMessage(car, "Fastback");
+    // else if (car is Car {Model:"Mustang", ProducedAt.Year: 1976})
+    //     return GenerateMessage(car, "Cobra II");
+    // else 
+    //     return GenerateMessage(car, "Unknown");
+
+    return car switch
+      {
+        Car {Model:"Mustang", ProducedAt.Year: 1967} => GenerateMessage(car, "Fastback"),
+        Car {Model:"Mustang", ProducedAt.Year: 1976} => GenerateMessage(car, "Cobra II"),
+        _ => GenerateMessage(car, "Unknown")
+      };
     }
 
     static void Main(string[] args)
